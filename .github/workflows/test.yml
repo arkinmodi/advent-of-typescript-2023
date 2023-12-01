@@ -2,7 +2,7 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
 # yamllint enable rule:line-length
 ---
-name: Lint
+name: Test
 "on":
   pull_request:
   push:
@@ -10,7 +10,7 @@ name: Lint
       - main
 
 jobs:
-  prettier:
+  typescript:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -19,14 +19,4 @@ jobs:
           cache: npm
           node-version: 20
       - run: npm ci
-      - run: npx prettier --check '**/*.{json,md,ts,yml}'
-
-  yamllint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v4
-        with:
-          python-version: 3.x
-      - run: python3 -m pip install yamllint
-      - run: python3 -m yamllint --strict .
+      - run: npx tsc --project ./tsconfig.json
