@@ -1,0 +1,44 @@
+# yamllint disable rule:line-length
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+# yamllint enable rule:line-length
+---
+name: Lint
+"on":
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  prettier:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          cache: npm
+      - run: npm ci
+      - run: >
+          npx prettier
+          --check
+          '**/*.{ts,md,json,yml}'
+
+  typescript:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          cache: npm
+      - run: npm ci
+      - run: npx tsc --project ./tsconfig.json
+
+  yamllint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.x
+      - run: python3 -m pip install yamllint
+      - run: python3 -m yamllint --strict .
