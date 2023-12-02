@@ -4,10 +4,13 @@
     "repository": "https://github.com/arkinmodi/advent-of-typescript-2023",
     "private": true,
     "scripts": {
-        "lint": "prettier --write **/*.{json,md,ts,yml}",
+        "lint": "npm run lint:prettier && npm run lint:yamllint",
+        "lint:prettier": "prettier --write **/*.{json,md,ts,yml}",
+        "lint:yamllint": "yamllint --strict .",
         "test": "tsc"
     },
     "dependencies": {
+        "prettier": "^3.1.0",
         "type-testing": "^0.2.0",
         "typescript": "^5.3.2"
     }
