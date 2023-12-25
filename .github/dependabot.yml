@@ -5,7 +5,7 @@ updates:
   - directory: /
     package-ecosystem: npm
     schedule:
-      interval: monthly
+      interval: daily
     groups:
       npm:
         patterns:
@@ -14,7 +14,7 @@ updates:
   - package-ecosystem: github-actions
     directory: /
     schedule:
-      interval: monthly
+      interval: daily
     groups:
       github-actions:
         patterns:
